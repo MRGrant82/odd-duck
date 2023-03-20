@@ -4,6 +4,7 @@
     grid-template-rows: 1fr; 
     gap: 10px; 
     
+    
   }
   
   #products img {
@@ -11,4 +12,6 @@
     height: 100%;
     object-fit: cover;
     border: 3px solid black;
+    max-height: 500px;
+    min-height: 500px;
   }

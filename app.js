@@ -64,6 +64,10 @@ function isVotingComplete() {
   }
   return true;
 }
+
+ // Handles the click event on an image and increments the timesClicked property of the corresponding Product object.
+  // If all Product objects have been displayed at least once, removes the click event listener from the productsDiv and displays the results.
+  // Otherwise, displays 3 new Product objects.
 function handleProductClick(event) {
   var target = event.target;
   if (target.tagName === 'IMG') {
@@ -74,24 +78,24 @@ function handleProductClick(event) {
         break;
       }
     }
-    if (isVotingComplete()) {
+    if (isVotingComplete()) { // If all products have been shown, remove the event listener and display the results
       productsDiv.removeEventListener('click', handleProductClick);
       displayResults();
-    } else {
+    } else { // Otherwise, display 3 new products
       displayProducts();
     }
   }
 }
 
-var productsDiv = document.getElementById('products');
-productsDiv.addEventListener('click', handleProductClick);
+var productsDiv = document.getElementById('products'); // Get the products div
+productsDiv.addEventListener('click', handleProductClick);// Add the event listener for when an image is clicked
 
-var viewResultsButton = document.getElementById('viewResults');
-viewResultsButton.addEventListener('click', function() {
+var viewResultsButton = document.getElementById('viewResults'); // Get the view results button
+viewResultsButton.addEventListener('click', function() {// Add an event listener to display results when the button is clicked
   displayResults();
 });
 
-displayProducts();
+displayProducts();// Display 3 initial products to start the app
 function displayResults() {
   var resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
