@@ -88,8 +88,7 @@ function getRandomProductFromPool(pool) {
   return pool[randomIndex];
 }
 
-
-// Checks if all products have been shown to the user at least once. 
+// Checks if all products have been shown to the user at least once.
 function isVotingComplete() {
   for (var i = 0; i < products.length; i++) {
     if (products[i].timesShown === 0) {
@@ -100,9 +99,12 @@ function isVotingComplete() {
 }
 
 // Handles the click event on an image and increments the timesClicked property of the corresponding Product object.
-// If all Product objects have been displayed at least once, removes the click event listener from the productsDiv and displays the results.
+// If all Product objects have been displayed at least once and the user has voted on 25 products, removes the click event listener from the productsDiv and displays the results.
 // Otherwise, displays 3 new Product objects.
+var clickCounter = 0;
 function handleProductClick(event) {
+  clickCounter++;
+
   var target = event.target;
   var productId = target.getAttribute('data-product-id');
   if (productId) {
@@ -113,7 +115,7 @@ function handleProductClick(event) {
     product.timesClicked++;
   }
 
-  if (isVotingComplete()) {
+  if (isVotingComplete() && clickCounter === 25) {
     productsDiv.removeEventListener('click', handleProductClick);
     displayResults();
   } else {
