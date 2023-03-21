@@ -47,22 +47,45 @@ function displayProducts() {
   uniqueProducts[2].timesShown++;
 }
 
-// We are ensuring that we do not get an image from the immediately preceding set of images.
-var previousProducts = [];
-// Generate 3 unique products from the products array.
+// Array to keep track of previously displayed products
+var previouslyDisplayedProducts = [];
+
+// Generate 3 unique products from the products array
 function generateUniqueProducts() {
-  var pool = products.filter(function(product) {
-    return !previousProducts.includes(product);
-  });
   var uniqueProducts = [];
+  
+  // Get the pool of products that have not been displayed in the previous set
+  var pool = getPoolOfProducts();
+  
+  // Loop until we have 3 unique products
   while (uniqueProducts.length < 3) {
-    var product = pool[Math.floor(Math.random() * pool.length)];
-    if (!uniqueProducts.includes(product)) {
-      uniqueProducts.push(product);
+    // Get a random product from the pool
+    var randomProduct = getRandomProductFromPool(pool);
+    
+    // If the product is not already in the uniqueProducts array, add it
+    if (!uniqueProducts.includes(randomProduct)) {
+      uniqueProducts.push(randomProduct);
     }
   }
-  previousProducts = uniqueProducts;
+  
+  // Keep track of the displayed products in the previouslyDisplayedProducts array
+  previouslyDisplayedProducts = uniqueProducts;
+  
+  // Return the array of unique products
   return uniqueProducts;
+}
+
+// Helper function to get the pool of products that have not been displayed in the previous set
+function getPoolOfProducts() {
+  return products.filter(function(product) {
+    return !previouslyDisplayedProducts.includes(product);
+  });
+}
+
+// Helper function to get a random product from the pool
+function getRandomProductFromPool(pool) {
+  var randomIndex = Math.floor(Math.random() * pool.length);
+  return pool[randomIndex];
 }
 
 
