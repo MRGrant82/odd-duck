@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>Odd Duck Product Co</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Include Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>Odd Duck Product Co</h1>
@@ -14,7 +16,11 @@
   </div>
   
   <button id="viewResults">View Results</button>
-  <div id="results"></div>
+  <div id="results">
+    <!-- Add a canvas element for the chart -->
+    <canvas id="chart"></canvas>
+  </div>
+  
   <script src="app.js"></script>
 </body>
 </html>

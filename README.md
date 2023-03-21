@@ -19,6 +19,7 @@ This is a web app that allows users to vote on their favorite product from a sel
 - Click on your favorite product from the 3 displayed options.
 - The app will display 3 new products for you to choose from.
 - After the specified number of rounds, click the "View Results" button to see the vote counts and number of times each product was displayed.
+- After all products have been displayed at least once, click the "View Results" button to see the voting results in a bar chart format.
 
 
 ## License

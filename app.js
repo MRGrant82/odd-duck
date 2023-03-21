@@ -47,19 +47,26 @@ function displayProducts() {
   uniqueProducts[2].timesShown++;
 }
 
+// We are ensuring that we do not get an image from the immediately preceding set of images.
+var previousProducts = [];
 // Generate 3 unique products from the products array.
 function generateUniqueProducts() {
+  var pool = products.filter(function(product) {
+    return !previousProducts.includes(product);
+  });
   var uniqueProducts = [];
   while (uniqueProducts.length < 3) {
-    var product = products[Math.floor(Math.random() * products.length)];
+    var product = pool[Math.floor(Math.random() * pool.length)];
     if (!uniqueProducts.includes(product)) {
       uniqueProducts.push(product);
     }
   }
+  previousProducts = uniqueProducts;
   return uniqueProducts;
 }
 
-// Checks if all products have been shown to the user at least once. If the timesShown property of each product object is > 0.
+
+// Checks if all products have been shown to the user at least once. 
 function isVotingComplete() {
   for (var i = 0; i < products.length; i++) {
     if (products[i].timesShown === 0) {
@@ -105,10 +112,49 @@ function displayResults() {
   var resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
 
+  var voteData = [];
+  var viewData = [];
+  var labels = [];
+
   for (var i = 0; i < products.length; i++) {
     var product = products[i];
-    var result = document.createElement('p');
-    result.innerHTML = product.name + ' had ' + product.timesClicked + ' votes, and was seen ' + product.timesShown + ' times.';
-    resultsDiv.appendChild(result);
+    labels.push(product.name);
+    voteData.push(product.timesClicked);
+    viewData.push(product.timesShown);
   }
+
+  var canvas = document.createElement('canvas');
+  canvas.id = 'chart';
+  resultsDiv.appendChild(canvas);
+
+  var ctx = canvas.getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Votes',
+        data: voteData,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Views',
+        data: viewData,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
 }
+
