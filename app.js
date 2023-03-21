@@ -152,8 +152,8 @@ function displayResults() {
   canvas.id = 'chart';
   resultsDiv.appendChild(canvas);
 
-  var ctx = canvas.getContext('2d');
-  var chart = new Chart(ctx, {
+  var context = canvas.getContext('2d');
+  var chart = new Chart(context, {
     type: 'bar',
     data: {
       labels: labels,
