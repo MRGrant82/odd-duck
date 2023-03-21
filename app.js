@@ -1,5 +1,6 @@
 // Constructor function for creating a Product object
-function Product(name, imagePath) {
+function Product(id, name, imagePath) {
+  this.id = id;
   this.name = name;
   this.imagePath = imagePath;
   this.timesShown = 0;
@@ -8,25 +9,25 @@ function Product(name, imagePath) {
 
 // Global variable for the Product object
 var products = [
-  new Product('Bag', 'img/bag.jpg'),
-  new Product('Banana', 'img/banana.jpg'),
-  new Product('Bathroom', 'img/bathroom.jpg'),
-  new Product('Boots', 'img/boots.jpg'),
-  new Product('Breakfast', 'img/breakfast.jpg'),
-  new Product('Bubblegum', 'img/bubblegum.jpg'),
-  new Product('Chair', 'img/chair.jpg'),
-  new Product('Cthulhu', 'img/cthulhu.jpg'),
-  new Product('Dog Duck', 'img/dog-duck.jpg'),
-  new Product('Dragon', 'img/dragon.jpg'),
-  new Product('Pen', 'img/pen.jpg'),
-  new Product('Pet Sweep', 'img/pet-sweep.jpg'),
-  new Product('Scissors', 'img/scissors.jpg'),
-  new Product('Shark', 'img/shark.jpg'),
-  new Product('Sweep', 'img/sweep.png'),
-  new Product('Tauntaun', 'img/tauntaun.jpg'),
-  new Product('Unicorn', 'img/unicorn.jpg'),
-  new Product('Water Can', 'img/water-can.jpg'),
-  new Product('Wine Glass', 'img/wine-glass.jpg')
+  new Product(1, 'Bag', 'img/bag.jpg'),
+  new Product(2, 'Banana', 'img/banana.jpg'),
+  new Product(3, 'Bathroom', 'img/bathroom.jpg'),
+  new Product(4, 'Boots', 'img/boots.jpg'),
+  new Product(5, 'Breakfast', 'img/breakfast.jpg'),
+  new Product(6, 'Bubblegum', 'img/bubblegum.jpg'),
+  new Product(7, 'Chair', 'img/chair.jpg'),
+  new Product(8, 'Cthulhu', 'img/cthulhu.jpg'),
+  new Product(9, 'Dog Duck', 'img/dog-duck.jpg'),
+  new Product(10, 'Dragon', 'img/dragon.jpg'),
+  new Product(11, 'Pen', 'img/pen.jpg'),
+  new Product(12, 'Pet Sweep', 'img/pet-sweep.jpg'),
+  new Product(13, 'Scissors', 'img/scissors.jpg'),
+  new Product(14, 'Shark', 'img/shark.jpg'),
+  new Product(15, 'Sweep', 'img/sweep.png'),
+  new Product(16, 'Tauntaun', 'img/tauntaun.jpg'),
+  new Product(17, 'Unicorn', 'img/unicorn.jpg'),
+  new Product(18, 'Water Can', 'img/water-can.jpg'),
+  new Product(19, 'Wine Glass', 'img/wine-glass.jpg')
 ];
 
 // Display 3 unique products from the products array.
@@ -38,6 +39,9 @@ function displayProducts() {
   img1.src = uniqueProducts[0].imagePath;
   img2.src = uniqueProducts[1].imagePath;
   img3.src = uniqueProducts[2].imagePath;
+  img1.setAttribute('data-product-id', uniqueProducts[0].id);
+  img2.setAttribute('data-product-id', uniqueProducts[1].id);
+  img3.setAttribute('data-product-id', uniqueProducts[2].id);
   uniqueProducts[0].timesShown++;
   uniqueProducts[1].timesShown++;
   uniqueProducts[2].timesShown++;
@@ -65,37 +69,38 @@ function isVotingComplete() {
   return true;
 }
 
- // Handles the click event on an image and increments the timesClicked property of the corresponding Product object.
-  // If all Product objects have been displayed at least once, removes the click event listener from the productsDiv and displays the results.
-  // Otherwise, displays 3 new Product objects.
+// Handles the click event on an image and increments the timesClicked property of the corresponding Product object.
+// If all Product objects have been displayed at least once, removes the click event listener from the productsDiv and displays the results.
+// Otherwise, displays 3 new Product objects.
 function handleProductClick(event) {
   var target = event.target;
-  if (target.tagName === 'IMG') {
-    var src = target.src;
-    for (var i = 0; i < products.length; i++) {
-      if (products[i].imagePath === src) {
-        products[i].timesClicked++;
-        break;
-      }
-    }
-    if (isVotingComplete()) { // If all products have been shown, remove the event listener and display the results
-      productsDiv.removeEventListener('click', handleProductClick);
-      displayResults();
-    } else { // Otherwise, display 3 new products
-      displayProducts();
-    }
+  var productId = target.getAttribute('data-product-id');
+  if (productId) {
+    productId = parseInt(productId, 10);
+    var product = products.find(function(p) {
+      return p.id === productId;
+    });
+    product.timesClicked++;
+  }
+
+  if (isVotingComplete()) {
+    productsDiv.removeEventListener('click', handleProductClick);
+    displayResults();
+  } else {
+    displayProducts();
   }
 }
 
-var productsDiv = document.getElementById('products'); // Get the products div
-productsDiv.addEventListener('click', handleProductClick);// Add the event listener for when an image is clicked
+var productsDiv = document.getElementById('products');
+productsDiv.addEventListener('click', handleProductClick);
 
-var viewResultsButton = document.getElementById('viewResults'); // Get the view results button
-viewResultsButton.addEventListener('click', function() {// Add an event listener to display results when the button is clicked
+var viewResultsButton = document.getElementById('viewResults');
+viewResultsButton.addEventListener('click', function() {
   displayResults();
 });
 
-displayProducts();// Display 3 initial products to start the app
+displayProducts();
+
 function displayResults() {
   var resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
