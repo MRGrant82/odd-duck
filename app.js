@@ -158,14 +158,14 @@ function displayResults() {
       datasets: [{
         label: 'Votes',
         data: voteData,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)', // change to orange color
+        borderColor: 'rgba(255, 159, 64, 1)', // change to orange color
         borderWidth: 1
       }, {
         label: 'Views',
         data: viewData,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // change to teal color
+        borderColor: 'rgba(75, 192, 192, 1)', // change to teal color
         borderWidth: 1
       }]
     },
