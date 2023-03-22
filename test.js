@@ -158,12 +158,11 @@ function displayResults() {
   var viewData = [];
   var labels = [];
 
-  for (var i = 0; i < products.length; i++) {
-    var product = products[i];
+  products.forEach(function(product) {
     labels.push(product.name);
     voteData.push(product.timesClicked);
     viewData.push(product.timesShown);
-  }
+  });
 
   var canvas = document.createElement('canvas');
   canvas.id = 'chart';
@@ -202,6 +201,7 @@ function displayResults() {
   // save data to local storage
   saveDataToLocalStorage(products);
 }
+
 
 // Function to save data to local storage
 function saveDataToLocalStorage(data) {
